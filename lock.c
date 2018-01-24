@@ -18,28 +18,21 @@ int * operations;
 void *pthread_execution(void *t_id) {
 
     long my_tid = (long)t_id;
-
     int op_per_theread = m/t_count;
-
     srand(clock());
 
     for (int i = my_tid*op_per_theread; i < (my_tid+1)*op_per_theread; i++) {
-      // printf("%li ", my_tid);
-      // printf("%li\n", my_tid*op_per_theread);
       int value = rand() % 65536;
       if(operations[i] == 0){
         pthread_rwlock_rdlock(&rwlock);
-        // printf("%li, member\n", my_tid);
         member(value, head);
         pthread_rwlock_unlock(&rwlock);
       } else if(operations[i] == 1) {
         pthread_rwlock_wrlock(&rwlock);
-        // printf("%li, insert\n", my_tid);
         insert(value, head);
         pthread_rwlock_unlock(&rwlock);
       } else {
         pthread_rwlock_wrlock(&rwlock);
-        // printf("%li, delete\n", my_tid);
         delete(value, head);
         pthread_rwlock_unlock(&rwlock);
       }
@@ -72,9 +65,7 @@ float lock_execution(int argc, char *argv[]) {
   }
 
   shuffle(operations, m);
-
   t_handler = (pthread_t *) malloc(t_count * sizeof(pthread_t));
-
   clock_t init = clock();
 
   pthread_rwlock_init(&rwlock, NULL);
@@ -82,7 +73,6 @@ float lock_execution(int argc, char *argv[]) {
   for (t_id = 0; t_id < t_count; t_id++) {
       pthread_create(&t_handler[t_id], NULL, pthread_execution, (void*)t_id);
   }
-
   for (t_id = 0; t_id < t_count; t_id++) {
       pthread_join(t_handler[t_id], NULL);
   }
@@ -90,7 +80,6 @@ float lock_execution(int argc, char *argv[]) {
   pthread_rwlock_destroy(&rwlock);
 
   clock_t end = clock();
-
   return (double)(end - init) / CLOCKS_PER_SEC;
 }
 
@@ -108,9 +97,7 @@ int main(int argc, char *argv[]) {
       delete_percentage = (float) atof(argv[6]);
 
       for (int i = 0; i < no_of_tests; i++) {
-          // pthread_mutex_init(&mutex, NULL);
           float time = lock_execution(argc, argv);
-          // pthread_mutex_destroy(&mutex);
           printf("%.10f\n", time);
       }
 

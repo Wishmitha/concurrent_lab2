@@ -29,12 +29,7 @@ float serial_execution() {
       }
     }
 
-    //
-    // printf("%f, %f, %f \n", member_percentage, insert_percentage, delete_percentage);
-    // int n =  sizeof(operations)/ sizeof(operations[0]);
     shuffle(operations, m);
-    // printArray(operations, m);
-    // printList(head);
     clock_t init = clock();
 
     srand(clock());
@@ -51,12 +46,8 @@ float serial_execution() {
     }
 
     printf("end :");
-    // printList(head);
 
     clock_t end = clock();
-
-    //printf("%d\n", head -> data);
-    // printList(head);
 
     return (double)(end - init) / CLOCKS_PER_SEC;
 }
@@ -82,22 +73,5 @@ int main(int argc, char *argv[]) {
       printf("Error : Insufficient Number Parameters.\n");
     }
 
-
-    // int a[10] = {1,2,3,4,6,7,8,9,0};
-    // int z =  sizeof(a)/ sizeof(a[0]);
-    // shuffle(a, z);
-    // printArray(a, z);
-    // printf("end \n");
-    //
-
-
-    // struct list_node_s *head = malloc(sizeof(struct list_node_s));
-    //
-    //
-    // for (int i=0; i < 10; i++) {
-    //     int value = rand() % 65536;
-    //     insert(value, head);
-    // }
-    // printList(head);
     return 0;
 }

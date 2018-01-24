@@ -24,22 +24,17 @@ void *pthread_execution (void* t_id) {
   srand(clock());
 
   for (int i = my_tid*op_per_theread; i < (my_tid+1)*op_per_theread; i++) {
-    // printf("%li ", my_tid);
-    // printf("%li\n", my_tid*op_per_theread);
     int value = rand() % 65536;
     if(operations[i] == 0){
       pthread_mutex_lock(&mutex);
-      // printf("%li, member\n", my_tid);
       member(value, head);
       pthread_mutex_unlock(&mutex);
     } else if(operations[i] == 1) {
       pthread_mutex_lock(&mutex);
-      // printf("%li, insert\n", my_tid);
       insert(value, head);
       pthread_mutex_unlock(&mutex);
     } else {
       pthread_mutex_lock(&mutex);
-      // printf("%li, delete\n", my_tid);
       delete(value, head);
       pthread_mutex_unlock(&mutex);
     }
@@ -119,14 +114,4 @@ int main(int argc, char *argv[]) {
   }
 
   return 0;
-
-  // const int samples = 4;
-  //
-  //   for (int j = 0; j < samples; j++) {
-  //       pthread_mutex_init(&mutex, NULL);
-  //       float time = linkedList_mutex_program(argc, argv);
-  //       pthread_mutex_destroy(&mutex);
-  //       printf("%.6f  \n", time);
-  //   }
-  //   return 0;
 }
