@@ -1,9 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
-#include <stdbool.h>
-// #include <sys/time.h>
-#include <math.h>
 #include "linkedlist.h"
 #include "shuffler.h"
 
@@ -32,48 +28,58 @@ float serial_execution() {
         operations[i] = 2;
       }
     }
+
     //
     // printf("%f, %f, %f \n", member_percentage, insert_percentage, delete_percentage);
-    int n =  sizeof(operations)/ sizeof(operations[0]);
-    shuffle(operations, n);
-    printArray(operations, n);
+    // int n =  sizeof(operations)/ sizeof(operations[0]);
+    shuffle(operations, m);
+    // printArray(operations, m);
     // printList(head);
     clock_t init = clock();
 
     srand(clock());
-    for (int i = 0; i < sizeof(operations); i++) {
+
+    for (int i = 0; i < m; i++) {
         int value = rand() % 65536;
         if(operations[i] == 0){
-          // member(value, head);
+          member(value, head);
         } else if(operations[i] == 1) {
-          // insert(value, head);
+          insert(value, head);
         } else {
           delete(value, head);
         }
     }
 
     printf("end :");
-    printList(head);
+    // printList(head);
 
     clock_t end = clock();
 
     //printf("%d\n", head -> data);
-    printList(head);
+    // printList(head);
 
     return (double)(end - init) / CLOCKS_PER_SEC;
 }
 
 
 int main(int argc, char *argv[]) {
-    const int no_of_tests = 1;
+    const int no_of_tests = 15;
 
-    if(argc > 2){
+    if(argc == 6){
       n = (int) strtol(argv[1], (char **) NULL, 10);
       m = (int) strtol(argv[2], (char **) NULL, 10);
 
       member_percentage = (float) atof(argv[3]);
       insert_percentage = (float) atof(argv[4]);
       delete_percentage = (float) atof(argv[5]);
+
+      for (int i = 0; i < no_of_tests; i++) {
+          float time = serial_execution();
+          printf("%.10f\n", time);
+      }
+
+    }else{
+      printf("Error : Insufficient Number Parameters.\n");
     }
 
 
@@ -83,10 +89,7 @@ int main(int argc, char *argv[]) {
     // printArray(a, z);
     // printf("end \n");
     //
-    for (int i = 0; i < no_of_tests; i++) {
-        float time = serial_execution();
-        printf("%.10f\n", time);
-    }
+
 
     // struct list_node_s *head = malloc(sizeof(struct list_node_s));
     //
